@@ -14,6 +14,7 @@ import TextInputField from "../components/TextInputField";
 import ButtonField from "../components/ButtonField";
 import { useNavigation } from "@react-navigation/native";
 import BackButton from "../components/BackBotton";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
@@ -22,13 +23,28 @@ export default function RegisterScreen() {
 
   const navigation = useNavigation();
 
-  const handleRegister = () => {
-    const user = {
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword,
-    };
+  const handleRegister = async () => {
+    try {
+      // Kiểm tra xác nhận mật khẩu
+      if (password !== confirmPassword) {
+        Alert.alert('Error', 'Passwords do not match.');
+        return;
+      }
+
+      // Lưu thông tin người dùng vào AsyncStorage
+      const user = {
+        email: email,
+        password: password,
+      };
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+
+      // Điều hướng đến màn hình đăng nhập
+      navigation.navigate("Login");
+    } catch (error) {
+      console.error('Error during registration:', error);
+    }
   };
+
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
@@ -40,7 +56,7 @@ export default function RegisterScreen() {
       <KeyboardAvoidingView>
         <View style={{ marginTop: 70 }}>
           <TextInputField
-            placeholder="Enter your phone"
+            placeholder="Enter your email"
             value={email}
             setValue={setEmail}
           />
