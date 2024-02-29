@@ -20,13 +20,13 @@ export default function SignInScreen() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const handleLogin = () => {
     const user = {
       phone: phone,
       password: password,
     };
-    navigation.navigate("Home");
+    navigation.navigate("HomePage");
   };
 
   return (
