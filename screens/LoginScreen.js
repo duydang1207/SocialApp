@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Pressable,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -15,18 +16,29 @@ import ButtonField from "../components/ButtonField";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import BackButton from "../components/BackBotton";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const [disabled, setDisabled] = useState(false);
-  const handleLogin = () => {
-    const user = {
-      phone: phone,
-      password: password,
-    };
-    navigation.navigate("HomePage");
+  const handleLogin = async () => {
+    try {
+      if (phone === '0869950090' && password === '123456') {
+        // Lưu thông tin người dùng vào AsyncStorage
+        await AsyncStorage.setItem('user', JSON.stringify({ phone, password }));
+  
+        // Điều hướng đến màn hình HomePage
+        navigation.navigate("HomePage");
+      } else {
+        // Thông báo lỗi khi thông tin đăng nhập không đúng
+        Alert.alert('Invalid phone number or password!');
+      }
+    } catch (error) {
+      // Xử lý lỗi nếu có
+      console.error('Error during login:', error);
+    }
   };
 
   return (

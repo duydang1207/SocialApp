@@ -8,7 +8,7 @@ import BottomTab, { bottomTabIcons } from '../components/home/BottomTab';
 
 const HomeScreen = () => {
   return (
-    <SafeAreaView >
+    <SafeAreaView style={{ backgroundColor: "#FFFFFF" }}>
       <Header/>
       <Stories/>
       <ScrollView style={{ height: '74%' }}>
