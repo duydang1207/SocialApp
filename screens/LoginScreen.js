@@ -13,23 +13,27 @@ import { MaterialIcons } from "@expo/vector-icons";
 import TextInputField from "../components/TextInputField";
 import ButtonField from "../components/ButtonField";
 import { useNavigation } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
+import BackButton from "../components/BackBotton";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
-
+  const [disabled, setDisabled] = useState(true);
   const handleLogin = () => {
     const user = {
-      email: email,
+      phone: phone,
       password: password,
     };
     navigation.navigate("Home");
   };
+
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
     >
+      <BackButton />
       <View style={{ marginTop: 120 }}>
         <Image source={require("../assets/images/logo.png")} />
       </View>
@@ -37,8 +41,8 @@ export default function LoginScreen() {
         <View style={{ marginTop: 70 }}>
           <TextInputField
             placeholder="Enter your phone"
-            value={email}
-            setValue={setEmail}
+            value={phone}
+            setValue={setPhone}
           />
         </View>
         <View>
@@ -51,15 +55,17 @@ export default function LoginScreen() {
         </View>
         <View
           style={{
-            marginTop: 24,
+            marginTop: 20,
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "flex-end",
           }}
         >
-          <Text style={{ color: "#007FFF", fontWeight: "500" }}>
-            Forgot Password
-          </Text>
+          <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
+            <Text style={{ color: "#007FFF", fontWeight: "500" }}>
+              Forgot Password
+            </Text>
+          </Pressable>
         </View>
         <View style={{ marginTop: 50 }}>
           <ButtonField
@@ -74,6 +80,7 @@ export default function LoginScreen() {
               alignItems: "center",
               justifyContent: "center",
             }}
+            disabled={disabled}
             label="Login"
           />
         </View>

@@ -13,27 +13,23 @@ import { MaterialIcons } from "@expo/vector-icons";
 import TextInputField from "../components/TextInputField";
 import ButtonField from "../components/ButtonField";
 import { useNavigation } from "@react-navigation/native";
-import BackButton from "../components/BackBotton";
 
-export default function RegisterScreen() {
+export default function ForgotPasswordScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
   const navigation = useNavigation();
 
-  const handleRegister = () => {
+  const handleLogin = () => {
     const user = {
       email: email,
       password: password,
-      confirmPassword: confirmPassword,
     };
+    navigation.navigate("Home");
   };
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
     >
-      <BackButton />
       <View style={{ marginTop: 120 }}>
         <Image source={require("../assets/images/logo.png")} />
       </View>
@@ -53,17 +49,21 @@ export default function RegisterScreen() {
             setValue={setPassword}
           />
         </View>
-        <View>
-          <TextInputField
-            secureTextEntry={true}
-            placeholder="Confirm password"
-            value={confirmPassword}
-            setValue={setConfirmPassword}
-          />
+        <View
+          style={{
+            marginTop: 24,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Text style={{ color: "#007FFF", fontWeight: "500" }}>
+            Forgot Password
+          </Text>
         </View>
         <View style={{ marginTop: 50 }}>
           <ButtonField
-            onPress={handleRegister}
+            onPress={handleLogin}
             styles={{
               width: "100%",
               height: 44,
@@ -74,15 +74,16 @@ export default function RegisterScreen() {
               alignItems: "center",
               justifyContent: "center",
             }}
-            label="Register"
+            label="Login"
           />
         </View>
         <Pressable
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => navigation.navigate("Register")}
           style={{ marginTop: 15 }}
         >
           <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
-            Have an account? <Text style={{ color: "#3797EF" }}>Sign in</Text>
+            Don't have an account?{" "}
+            <Text style={{ color: "#3797EF" }}> Sign Up</Text>
           </Text>
         </Pressable>
       </KeyboardAvoidingView>

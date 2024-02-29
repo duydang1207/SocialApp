@@ -13,59 +13,45 @@ import { MaterialIcons } from "@expo/vector-icons";
 import TextInputField from "../components/TextInputField";
 import ButtonField from "../components/ButtonField";
 import { useNavigation } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
 import BackButton from "../components/BackBotton";
 
-export default function RegisterScreen() {
-  const [email, setEmail] = useState("");
+export default function SignInScreen() {
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
   const navigation = useNavigation();
-
-  const handleRegister = () => {
+  const [disabled, setDisabled] = useState(true);
+  const handleLogin = () => {
     const user = {
-      email: email,
+      phone: phone,
       password: password,
-      confirmPassword: confirmPassword,
     };
+    navigation.navigate("Home");
   };
+
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
     >
-      <BackButton />
       <View style={{ marginTop: 120 }}>
         <Image source={require("../assets/images/logo.png")} />
       </View>
+
       <KeyboardAvoidingView>
-        <View style={{ marginTop: 70 }}>
-          <TextInputField
-            placeholder="Enter your phone"
-            value={email}
-            setValue={setEmail}
+        <View style={styles.avatar}>
+          <Image
+            style={styles.img}
+            source={require("../assets/images/avatar.jpeg")}
           />
-        </View>
-        <View>
-          <TextInputField
-            secureTextEntry={true}
-            placeholder="Enter your password"
-            value={password}
-            setValue={setPassword}
-          />
-        </View>
-        <View>
-          <TextInputField
-            secureTextEntry={true}
-            placeholder="Confirm password"
-            value={confirmPassword}
-            setValue={setConfirmPassword}
-          />
+          <Text style={{ color: "#262626", fontWeight: 500, marginTop: 5 }}>
+            khoa_ne
+          </Text>
         </View>
         <View style={{ marginTop: 50 }}>
           <ButtonField
-            onPress={handleRegister}
+            onPress={handleLogin}
             styles={{
-              width: "100%",
+              width: 307,
               height: 44,
               backgroundColor: "#3797EF",
               borderRadius: 6,
@@ -74,15 +60,16 @@ export default function RegisterScreen() {
               alignItems: "center",
               justifyContent: "center",
             }}
-            label="Register"
+            disabled={disabled}
+            label="Login"
           />
         </View>
         <Pressable
           onPress={() => navigation.navigate("Login")}
-          style={{ marginTop: 15 }}
+          style={styles.switch}
         >
-          <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
-            Have an account? <Text style={{ color: "#3797EF" }}>Sign in</Text>
+          <Text style={{ color: "#3797EF", fontWeight: 600, fontSize: 14 }}>
+            Switch accounts
           </Text>
         </Pressable>
       </KeyboardAvoidingView>
@@ -90,4 +77,21 @@ export default function RegisterScreen() {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  avatar: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 30,
+  },
+  img: {
+    width: 80,
+    height: 80,
+    borderRadius: "50%",
+  },
+  switch: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 30,
+  },
+});
