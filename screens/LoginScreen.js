@@ -19,21 +19,28 @@ import BackButton from "../components/BackBotton";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen() {
-  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const [disabled, setDisabled] = useState(false);
   const handleLogin = async () => {
     try {
-      if (phone === '0869950090' && password === '123456') {
-        // Lưu thông tin người dùng vào AsyncStorage
-        await AsyncStorage.setItem('user', JSON.stringify({ phone, password }));
-  
-        // Điều hướng đến màn hình HomePage
-        navigation.navigate("HomePage");
+      // Lấy dữ liệu người dùng từ AsyncStorage
+      const userData = await AsyncStorage.getItem('user');
+      if (userData) {
+        // Chuyển đổi dữ liệu JSON thành đối tượng JavaScript
+        const user = JSON.parse(userData);
+        // Kiểm tra xem tài khoản có tồn tại không
+        if (user.email === email && user.password === password) {
+          // Đăng nhập thành công, điều hướng đến màn hình HomePage
+          navigation.navigate("HomePage");
+        } else {
+          // Thông báo lỗi khi thông tin đăng nhập không đúng
+          Alert.alert('Invalid phone number or password!');
+        }
       } else {
-        // Thông báo lỗi khi thông tin đăng nhập không đúng
-        Alert.alert('Invalid phone number or password!');
+        // Thông báo lỗi khi không tìm thấy tài khoản trong AsyncStorage
+        Alert.alert('No user found with provided credentials!');
       }
     } catch (error) {
       // Xử lý lỗi nếu có
@@ -52,9 +59,9 @@ export default function LoginScreen() {
       <KeyboardAvoidingView>
         <View style={{ marginTop: 70 }}>
           <TextInputField
-            placeholder="Enter your phone"
-            value={phone}
-            setValue={setPhone}
+            placeholder="Enter your email"
+            value={email}
+            setValue={setEmail}
           />
         </View>
         <View>
