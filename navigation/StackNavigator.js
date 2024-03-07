@@ -7,12 +7,13 @@ import RegisterScreen from "../screens/RegisterScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import SignInScreen from "../screens/SignInScreen";
 import HomeScreen from "../screens/HomeScreen";
+import ProfilePersonal from "../screens/ProfilePersonal";
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="SignIn"
           component={SignInScreen}
           options={{ headerShown: false }}
@@ -32,10 +33,15 @@ const StackNavigator = () => {
           name="ForgotPassword"
           component={ForgotPasswordScreen}
           options={{ headerShown: false }}
-        />
+        /> */}
         <Stack.Screen
           name="HomePage"
           component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={ProfilePersonal}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
