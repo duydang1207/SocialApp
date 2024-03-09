@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ScrollView } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import React, { useEffect} from 'react'
 import Header from '../components/home/Header'
 import Stories from '../components/home/Stories'
@@ -22,7 +22,7 @@ const HomeScreen = () => {
     fetchData();
   }, []);
   return (
-    <SafeAreaView style={{ backgroundColor: "#FFFFFF" }}>
+    <SafeAreaView style={styles.container}>
       <Header/>
       <Stories/>
       <ScrollView style={{ height: '74%' }}>
@@ -34,5 +34,12 @@ const HomeScreen = () => {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    flex: 1
+  }
+})
 
 export default HomeScreen
