@@ -17,35 +17,31 @@ import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import BackButton from "../components/BackBotton";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const [disabled, setDisabled] = useState(false);
-  const handleLogin = async () => {
-    try {
-      // Lấy dữ liệu người dùng từ AsyncStorage
-      const userData = await AsyncStorage.getItem('user');
-      if (userData) {
-        // Chuyển đổi dữ liệu JSON thành đối tượng JavaScript
-        const user = JSON.parse(userData);
-        // Kiểm tra xem tài khoản có tồn tại không
-        if (user.email === email && user.password === password) {
-          // Đăng nhập thành công, điều hướng đến màn hình HomePage
-          navigation.navigate("HomePage");
-        } else {
-          // Thông báo lỗi khi thông tin đăng nhập không đúng
-          Alert.alert('Invalid phone number or password!');
-        }
-      } else {
-        // Thông báo lỗi khi không tìm thấy tài khoản trong AsyncStorage
-        Alert.alert('No user found with provided credentials!');
-      }
-    } catch (error) {
-      // Xử lý lỗi nếu có
-      console.error('Error during login:', error);
-    }
+  const handleLogin = () => {
+    const user = {
+      email: email,
+      password: password,
+    };
+
+    axios
+      .post("http://localhost:8082/auth/login", user)
+      .then((response) => {
+        console.log(response);
+        // const token = response.data.token;
+        // AsyncStorage.setItem("authToken", token);
+        navigation.replace("HomeScreen");
+      })
+      .catch((error) => {
+        Alert.alert("Login Error", "Invalid Email");
+        console.log(error);
+      });
   };
 
   return (
