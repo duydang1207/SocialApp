@@ -8,19 +8,6 @@ import BottomTab, { bottomTabIcons } from '../components/home/BottomTab';
 import axios from "axios";
 
 const HomeScreen = () => {
-  const [ posts, setPosts ] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:8082/api/posts");
-        setPosts(response.data);
-      } catch (error) {
-        console.log("error message", error);
-      }
-    };
-
-    fetchData();
-  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <Header/>

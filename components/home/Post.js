@@ -1,6 +1,7 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { Divider } from 'react-native-elements'
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const postFooterIcons = [
   {
@@ -21,6 +22,10 @@ const postFooterIcons = [
     imgURL: 'https://img.icons8.com/fluency-systems-regular/48/bookmark-ribbon--v1.png'
   },
 ]
+
+const API = () => {
+  const [quote, setQuote] = useState('');
+}
 
 const Post = ({post}) => {
   return (

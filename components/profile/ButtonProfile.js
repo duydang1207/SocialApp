@@ -1,10 +1,15 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 const ButtonProfile = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.iconFeature}>
+      <TouchableOpacity 
+        onPress={() => navigation.push("EditProfile")}
+        style={styles.iconFeature}>
         <Text style={{fontWeight: '600',}}>
             Edit Profile
         </Text>
