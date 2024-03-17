@@ -15,34 +15,43 @@ import ButtonField from "../components/ButtonField";
 import { useNavigation } from "@react-navigation/native";
 import BackButton from "../components/BackBotton";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
 
   const navigation = useNavigation();
 
-  const handleRegister = async () => {
-    try {
-      // Kiểm tra xác nhận mật khẩu
-      if (password !== confirmPassword) {
-        Alert.alert('Error', 'Passwords do not match.');
-        return;
-      }
+  const handleRegister = () => {
+    const user = {
+      name: name,
+      email: email,
+      password: password,
+    };
 
-      // Lưu thông tin người dùng vào AsyncStorage
-      const user = {
-        email: email,
-        password: password,
-      };
-      await AsyncStorage.setItem('user', JSON.stringify(user));
-
-      // Điều hướng đến màn hình đăng nhập
-      navigation.navigate("Login");
-    } catch (error) {
-      console.error('Error during registration:', error);
-    }
+    // send a POST  request to the backend API to register the user
+    axios
+      .post("http://localhost:8082/auth/register", user)
+      .then((response) => {
+        console.log(response);
+        Alert.alert(
+          "Registration successful",
+          "You have been registered Successfully"
+        );
+        setName("");
+        setEmail("");
+        setPassword("");
+      })
+      .catch((error) => {
+        Alert.alert(
+          "Registration Error",
+          "An error occurred while registering"
+        );
+        console.log("registration failed", error);
+      });
   };
 
   return (
@@ -54,7 +63,14 @@ export default function RegisterScreen() {
         <Image source={require("../assets/images/logo.png")} />
       </View>
       <KeyboardAvoidingView>
-        <View style={{ marginTop: 70 }}>
+      <View style={{ marginTop: 70 }}>
+          <TextInputField
+            placeholder="Enter your name"
+            value={name}
+            setValue={setName}
+          />
+        </View>
+        <View>
           <TextInputField
             placeholder="Enter your email"
             value={email}
