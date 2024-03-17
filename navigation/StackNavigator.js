@@ -8,6 +8,7 @@ import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import SignInScreen from "../screens/SignInScreen";
 import HomeScreen from "../screens/HomeScreen";
 import ProfilePersonal from "../screens/ProfilePersonal";
+import EditProfile from "../screens/EditProfile";
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -42,6 +43,11 @@ const StackNavigator = () => {
         <Stack.Screen
           name="Profile"
           component={ProfilePersonal}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

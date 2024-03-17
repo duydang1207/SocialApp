@@ -7,7 +7,6 @@ import { POSTS } from '../data/posts';
 import BottomTab, { bottomTabIcons } from '../components/home/BottomTab';
 
 const HomeScreen = () => {
-  
   return (
     <SafeAreaView style={styles.container}>
       <Header/>

@@ -12,7 +12,7 @@ const Infomation = () => {
                 borderRadius: 50,
                 marginLeft: 5
             }}
-            source={{uri: 'https://s.net.vn/8s2T'}}
+            source={{uri: 'https://s.net.vn/rvQp'}}
         />
         <Text style={styles.username}>
             Nguyễn Duy Đăng
