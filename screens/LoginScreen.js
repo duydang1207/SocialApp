@@ -18,6 +18,7 @@ import { AntDesign } from "@expo/vector-icons";
 import BackButton from "../components/BackBotton";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
+import apiUrl from '../config'
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -29,13 +30,12 @@ export default function LoginScreen() {
       email: email,
       password: password,
     };
-
+    console.log(user);
     axios
-      .post("http://localhost:8082/auth/login", user)
+      .post(`${apiUrl.apiUrl}/api/auth/login`, user)
       .then((response) => {
-        console.log(response);
-        // const token = response.data.token;
-        // AsyncStorage.setItem("authToken", token);
+        const token = response?.data?.payload?.token;
+        AsyncStorage.setItem("authToken", token);
         navigation.replace("HomeScreen");
       })
       .catch((error) => {
@@ -43,6 +43,8 @@ export default function LoginScreen() {
         console.log(error);
       });
   };
+
+  console.log(apiUrl);
 
   return (
     <SafeAreaView
