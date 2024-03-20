@@ -16,7 +16,7 @@ export const bottomTabIcons = [
         active: 'https://img.icons8.com/ios-filled/50/search--v1.png'
     },
     {
-        name: 'Add',
+        name: 'Gallery',
         inactive: 'https://img.icons8.com/ios/50/plus-2-math.png',
         active: 'https://img.icons8.com/ios-filled/50/plus-2-math.png'
     },
