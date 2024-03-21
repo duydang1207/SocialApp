@@ -28,18 +28,19 @@ const API = () => {
 }
 
 const Post = ({post}) => {
+  console.log(post);
   return (
     <View style={{ marginBottom: 30}}>
       <Divider width={1} orientation='vertical'/>
       <PostHeader post={post}/>
       <PostImage post={post}/>
-      <View style={{ marginHorizontal: 15, marginTop: 10}}>
+      {/* <View style={{ marginHorizontal: 15, marginTop: 10}}>
         <PostFooter/>
         <Likes post={post}/>
         <Caption post={post}/>
         <CommentSection post={post}/>
         <Comments post={post}/>
-      </View>
+      </View> */}
     </View>
   )
 }
@@ -47,9 +48,9 @@ const Post = ({post}) => {
 const PostHeader = ({post}) => (
   <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 5, alignItems: 'center'}}>
     <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-      <Image source={{ uri: post.profile_picture }} style={styles.story}/>
+      <Image source={{ uri: post.image_url }} style={styles.story}/>
       <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500'}}>
-        {post.user}
+        {post.user.name}
       </Text>
     </View>
     <TouchableOpacity>
@@ -66,7 +67,7 @@ const PostImage = ({post}) => (
     }}
   >
     <Image 
-      source={{ uri: post.imgURL}}
+      source={{ uri: post.image_url}}
       style={{ height: '100%', resizeMode: 'cover'}}
     />
   </View>

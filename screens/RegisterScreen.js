@@ -16,12 +16,13 @@ import { useNavigation } from "@react-navigation/native";
 import BackButton from "../components/BackBotton";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
+import apiUrl from '../config'
 
 export default function RegisterScreen() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [name, setName] = useState("");
 
   const navigation = useNavigation();
 
@@ -31,12 +32,10 @@ export default function RegisterScreen() {
       email: email,
       password: password,
     };
-
-    // send a POST  request to the backend API to register the user
     axios
-      .post("http://localhost:8082/auth/register", user)
+      .post(`${apiUrl.apiUrl}/api/auth/register`, user)
       .then((response) => {
-        console.log(response);
+        console.log(response.data.payload);
         Alert.alert(
           "Registration successful",
           "You have been registered Successfully"
