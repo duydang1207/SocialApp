@@ -7,7 +7,6 @@ import { getData } from '../localStorage';
 const { USER_ACCESS_TOKEN } = storageKeys;
 
 export const getPosts = async (kind) => {
-  console.log(kind);
     const token = await getData(USER_ACCESS_TOKEN);
     try {
       const res = await axios.get(`${apiUrlBase}/api/posts/list`, {
@@ -29,9 +28,15 @@ export const getPosts = async (kind) => {
 };
 
 export const handleCreateLike = async (postId) => {
+    console.log(postId);
     const token = await getData(USER_ACCESS_TOKEN);
+    console.log(token);
+    console.log('res',`${apiUrlBase}/api/likes/create`);
+
     try {
-        const res = await axios.post(`${apiUrlBase}/api/like/create`,postId, {
+        const res = await axios.post(`${apiUrlBase}/api/likes/create`,{
+          postId: postId,
+        }, {
         headers: {
             'Authorization': `Bearer ${token}`
         }

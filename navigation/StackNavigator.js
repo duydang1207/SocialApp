@@ -10,6 +10,8 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfilePersonal from "../screens/ProfilePersonal";
 import EditProfile from "../screens/EditProfile";
 import GallerySrceen from "../screens/GallerySrceen";
+import MessageScreen from "../screens/MessageScreen";
+import ChatDetailScreen from "../screens/ChatDetailScreen";
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -54,6 +56,16 @@ const StackNavigator = () => {
         <Stack.Screen
           name="Gallery"
           component={GallerySrceen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Message"
+          component={MessageScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ChatDetail"
+          component={ChatDetailScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
