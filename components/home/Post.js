@@ -2,6 +2,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { Divider } from 'react-native-elements'
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { AntDesign } from '@expo/vector-icons';
 
 const postFooterIcons = [
   {
@@ -28,19 +29,19 @@ const API = () => {
 }
 
 const Post = ({post}) => {
-  console.log(post);
+  const [isLike, setIsLike] = useState(false);
   return (
     <View style={{ marginBottom: 30}}>
       <Divider width={1} orientation='vertical'/>
       <PostHeader post={post}/>
       <PostImage post={post}/>
-      {/* <View style={{ marginHorizontal: 15, marginTop: 10}}>
-        <PostFooter/>
+      <View style={{ marginHorizontal: 15, marginTop: 10}}>
+        <PostFooter post={post} isLike={isLike}/>
         <Likes post={post}/>
         <Caption post={post}/>
-        <CommentSection post={post}/>
-        <Comments post={post}/>
-      </View> */}
+        {/* <CommentSection post={post}/> */}
+        {/* <Comments post={post}/> */}
+      </View>
     </View>
   )
 }
@@ -73,35 +74,43 @@ const PostImage = ({post}) => (
   </View>
 )
 
-const PostFooter = ({post}) => (
-  <View style={{ flexDirection: 'row'}}>
-    <View style={styles.leftFooterIcon}>
-      <Icon imgStyle={styles.footIcon} imgURL={postFooterIcons[0].imgURL}/>
-      <Icon imgStyle={styles.footIcon} imgURL={postFooterIcons[1].imgURL}/>
-      <Icon imgStyle={styles.footIcon} imgURL={postFooterIcons[2].imgURL}/>
+const PostFooter = ({post,isLike}) => {
+  console.log('isLike',isLike);
+  const handleLike = () => {
+    console.log(post)
+  }
+  return(
+    <View style={{ flexDirection: 'row'}}>
+      <View style={styles.leftFooterIcon}>
+        <Icon imgStyle={styles.footIcon} imgURL={postFooterIcons[0].imgURL} onPress={handleLike}/>
+        <Icon imgStyle={styles.footIcon} imgURL={postFooterIcons[1].imgURL}/>
+        <Icon imgStyle={styles.footIcon} imgURL={postFooterIcons[2].imgURL}/>
+      </View>
+      <View style={{ flex: 1, alignItems: 'flex-end'}}>
+        <Icon imgStyle={styles.footIcon} imgURL={postFooterIcons[3].imgURL}/>
+      </View>
     </View>
-    <View style={{ flex: 1, alignItems: 'flex-end'}}>
-      <Icon imgStyle={styles.footIcon} imgURL={postFooterIcons[3].imgURL}/>
-    </View>
-  </View>
-)
+  )
+}
+  
 
-const Icon = ({ imgStyle, imgURL}) => (
-  <TouchableOpacity>
+
+const Icon = ({ imgStyle, imgURL, onPress}) => (
+  <TouchableOpacity onPress={onPress}>
     <Image style={imgStyle} source={{ uri: imgURL }}/>
   </TouchableOpacity>
 )
 
 const Likes = ({post}) => (
   <View style={{ flexDirection: 'row', marginTop: 4}}>
-    <Text style={{fontWeight: '600'}}>{post.likes.toLocaleString('en')} likes</Text>
+    <Text style={{fontWeight: '600'}}>{post.likedAmount} likes</Text>
   </View>
 )
 
 const Caption = ({ post }) => (
   <View style={{marginTop: 5}}>
     <Text>
-      <Text style={{fontWeight: '600'}}>{post.user}</Text>
+      <Text style={{fontWeight: '600'}}>{post.user.name}</Text>
       <Text> {post.caption}</Text>
     </Text>
   </View>
@@ -112,8 +121,8 @@ const CommentSection = ({post}) =>(
   <View style={{ marginTop: 5 }}>
     {!!post.comments.length && (
       <Text style={{ color: 'gray'}}>
-        View{post.comments.length > 1 ? ' all' : ''} {post.comments.length}{' '}
-        {post.comments.length > 1 ? 'comments': 'comment'}
+        View{post.commentedAmount > 1 ? ' all' : ''} {post.commentedAmount}{' '}
+        {post.commentedAmount > 1 ? 'comments': 'comment'}
       </Text>
     )}
   </View>

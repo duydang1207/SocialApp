@@ -3,30 +3,24 @@ import React, { useEffect, useState} from 'react'
 import Header from '../components/home/Header'
 import Stories from '../components/home/Stories'
 import Post from '../components/home/Post';
-import { POSTS } from '../data/posts';
 import BottomTab, { bottomTabIcons } from '../components/home/BottomTab';
-import axios from "axios";
-import apiUrl from '../config'
+import { getPosts } from '../untils/until/posts';
 const HomeScreen = () => {
   const [posts,setPosts]=useState([]);
-  console.log('apiUrl',apiUrl.apiUrl);
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const res = await axios.get(`${apiUrl.apiUrl}/api/posts/list`);
-        setPosts(res?.data?.payload);
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      const posts = await getPosts(1);
+      console.log('posts',posts)
+      if (posts) {
+        setPosts(posts.payload)
       }
     };
-
     fetchData();
   }, []);
-  console.log(posts);
   return (
     <SafeAreaView style={styles.container}>
       <Header/>
-      <Stories/>
+      <Stories posts={posts}/>
       <ScrollView style={{ height: '74%' }}>
         {posts.map((post, index) => (
           <Post post={post} key={index}/>
