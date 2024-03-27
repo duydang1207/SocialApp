@@ -10,41 +10,18 @@ import {
   Alert,
 } from "react-native";
 import React, { useState } from "react";
-import { MaterialIcons } from "@expo/vector-icons";
 import TextInputField from "../components/TextInputField";
 import ButtonField from "../components/ButtonField";
 import { useNavigation } from "@react-navigation/native";
-import { AntDesign } from "@expo/vector-icons";
 import BackButton from "../components/BackBotton";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from "axios";
 import apiUrl from '../config'
+import { handleLogin } from "../untils/until/login";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const [disabled, setDisabled] = useState(false);
-  const handleLogin = () => {
-    const user = {
-      email: email,
-      password: password,
-    };
-    console.log(user);
-    axios
-      .post(`${apiUrl.apiUrl}/api/auth/login`, user)
-      .then((response) => {
-        const token = response?.data?.payload?.token;
-        AsyncStorage.setItem("authToken", token);
-        navigation.replace("HomeScreen");
-      })
-      .catch((error) => {
-        Alert.alert("Login Error", "Invalid Email");
-        console.log(error);
-      });
-  };
-
-  console.log(apiUrl);
 
   return (
     <SafeAreaView
@@ -86,7 +63,9 @@ export default function LoginScreen() {
         </View>
         <View style={{ marginTop: 50 }}>
           <ButtonField
-            onPress={handleLogin}
+            onPress={() => {
+              handleLogin(email, password, navigation);
+            }}
             styles={{
               width: "100%",
               height: 44,

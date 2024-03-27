@@ -2,21 +2,31 @@ import { View, Text, ScrollView, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import { USERS } from '../../data/users';
 
-const Stories = () => {
+const Stories = ({posts}) => {
+  console.log('posts',posts);
   return (
     <View style={{ marginBottom: 7}}>
       <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
       >
-        {USERS.map((story, index) => (
+        <View style={{ alignItems: 'center'}}>
+          <Image source={{uri: USERS[0].image}}
+          style={styles.story}/>
+          <Text style={{ color:'black', fontSize: 13, marginTop: 5}}>
+            {USERS[0].user.length > 11 
+            ? USERS[0].user.slice(0,10).toLowerCase() + '...'
+            : USERS[0].user}
+          </Text>
+        </View>
+        {posts?.map((story, index) => (
           <View key={index} style={{ alignItems: 'center'}}>
-            <Image source={{uri: story.image}}
+            <Image source={{ uri: story.image_url }}
             style={styles.story}/>
             <Text style={{ color:'black', fontSize: 13, marginTop: 5}}>
-              {story.user.length > 11 
-              ? story.user.slice(0,10).toLowerCase() + '...'
-              : story.user}
+              {story?.user?.name?.length > 11 
+              ? story?.user?.name?.slice(0,10).toLowerCase() + '...'
+              : story?.user?.name}
             </Text>
           </View>
         ))}
